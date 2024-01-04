@@ -1,8 +1,8 @@
 package app.repository.implemetation;
 
 import app.configuration.HibernateConfiguration;
-import app.model.Animal;
-import app.repository.AnimalRepository;
+import app.model.Staff;
+import app.repository.StaffRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,24 +11,23 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class AnimalRepositoryImpl implements AnimalRepository {
-
+public class StaffRepositoryImpl implements StaffRepository {
     @Override
-    public Animal save(Animal entity) {
+    public Staff save(Staff entity) {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        Integer idOnCarSaved = (Integer) session.save(entity);
+        Integer idOnSavedStaff = (Integer) session.save(entity);
 
         transaction.commit();
         session.close();
 
-        return findById(idOnCarSaved);
+        return findById(idOnSavedStaff);
     }
 
     @Override
-    public Animal update(Animal entity) {
+    public Staff update(Staff entity) {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -40,7 +39,8 @@ public class AnimalRepositoryImpl implements AnimalRepository {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Error updating Animal", e);
+            // Handle the exception
+            throw new RuntimeException("Error updating Staff", e);
         } finally {
             session.close();
         }
@@ -49,50 +49,51 @@ public class AnimalRepositoryImpl implements AnimalRepository {
     }
 
     @Override
-    public Animal findById(Integer id) {
+    public Staff findById(Integer id) {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        Animal animal;
+        Staff staff;
         try {
-            TypedQuery<Animal> query = session.createNamedQuery("findAnimalById", Animal.class);
+            TypedQuery<Staff> query = session.getNamedQuery("findStaffById");
             query.setParameter("id", id);
-            animal = query.getSingleResult();
+            staff = query.getSingleResult();
         } catch (NoResultException e) {
-            animal = null;
+            staff = null;
         } catch (Exception e) {
-            throw new RuntimeException("Error finding Animal by ID", e);
+            throw new RuntimeException("Error finding Staff by ID", e);
         } finally {
             transaction.commit();
             session.close();
         }
-        return animal;
+
+        return staff;
     }
 
     @Override
-    public List<Animal> findAll() {
+    public List<Staff> findAll() {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
         try {
-            TypedQuery<Animal> query = session.createQuery("from Animal", Animal.class);
-            List<Animal> animals = query.getResultList();
+            TypedQuery<Staff> query = session.createQuery("from Staff", Staff.class);
+            List<Staff> staffMembers = query.getResultList();
             transaction.commit();
-            return animals;
+            return staffMembers;
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Error finding all Animals", e);
+            throw new RuntimeException("Error finding all Staff members", e);
         } finally {
             session.close();
         }
     }
 
     @Override
-    public boolean delete(Animal entity) {
+    public boolean delete(Staff entity) {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -104,7 +105,7 @@ public class AnimalRepositoryImpl implements AnimalRepository {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Error deleting Animal", e);
+            throw new RuntimeException("Error deleting Staff", e);
         } finally {
             session.close();
         }
