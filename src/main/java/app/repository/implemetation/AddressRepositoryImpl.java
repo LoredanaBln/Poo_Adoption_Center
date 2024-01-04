@@ -1,8 +1,8 @@
 package app.repository.implemetation;
 
 import app.configuration.HibernateConfiguration;
-import app.model.Animal;
-import app.repository.AnimalRepository;
+import app.model.Address;
+import app.repository.AddressRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,24 +11,23 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class AnimalRepositoryImpl implements AnimalRepository {
-
+public class AddressRepositoryImpl implements AddressRepository {
     @Override
-    public Animal save(Animal entity) {
+    public Address save(Address entity) {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        Integer idOnCarSaved = (Integer) session.save(entity);
+        Integer idOnSavedAddress = (Integer) session.save(entity);
 
         transaction.commit();
         session.close();
 
-        return findById(idOnCarSaved);
+        return findById(idOnSavedAddress);
     }
 
     @Override
-    public Animal update(Animal entity) {
+    public Address update(Address entity) {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -40,7 +39,8 @@ public class AnimalRepositoryImpl implements AnimalRepository {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Error updating Animal", e);
+            // Handle the exception
+            throw new RuntimeException("Error updating Address", e);
         } finally {
             session.close();
         }
@@ -49,50 +49,51 @@ public class AnimalRepositoryImpl implements AnimalRepository {
     }
 
     @Override
-    public Animal findById(Integer id) {
+    public Address findById(Integer id) {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        Animal animal;
+        Address address;
         try {
-            TypedQuery<Animal> query = session.createNamedQuery("findAnimalById", Animal.class);
+            TypedQuery<Address> query = session.getNamedQuery("findAddressById");
             query.setParameter("id", id);
-            animal = query.getSingleResult();
+            address = query.getSingleResult();
         } catch (NoResultException e) {
-            animal = null;
+            address = null;
         } catch (Exception e) {
-            throw new RuntimeException("Error finding Animal by ID", e);
+            throw new RuntimeException("Error finding Address by ID", e);
         } finally {
             transaction.commit();
             session.close();
         }
-        return animal;
+
+        return address;
     }
 
     @Override
-    public List<Animal> findAll() {
+    public List<Address> findAll() {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
         try {
-            TypedQuery<Animal> query = session.createQuery("from Animal", Animal.class);
-            List<Animal> animals = query.getResultList();
+            TypedQuery<Address> query = session.createQuery("from Address", Address.class);
+            List<Address> addresses = query.getResultList();
             transaction.commit();
-            return animals;
+            return addresses;
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Error finding all Animals", e);
+            throw new RuntimeException("Error finding all Addresses", e);
         } finally {
             session.close();
         }
     }
 
     @Override
-    public boolean delete(Animal entity) {
+    public boolean delete(Address entity) {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
@@ -104,7 +105,7 @@ public class AnimalRepositoryImpl implements AnimalRepository {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Error deleting Animal", e);
+            throw new RuntimeException("Error deleting Address", e);
         } finally {
             session.close();
         }

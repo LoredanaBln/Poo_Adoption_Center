@@ -4,19 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table
 @Data
+@NamedQueries({
+        @NamedQuery(name = "findAdoptionById", query = "from Adoption adoption where adoption.id =: id")
+})
 public class Adoption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

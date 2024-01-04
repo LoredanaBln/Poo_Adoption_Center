@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Table
 @Data
 @NamedQueries(
-        {@NamedQuery(name = "findAnimalById", query = "from Animal animal where animal.id = :id")}
+        {@NamedQuery(name = "findAnimalById", query = "from Animal animal where animal.id =: id")}
 )
 public class Animal implements Serializable {
     @Id
