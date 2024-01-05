@@ -1,7 +1,7 @@
 package app.controller.gui;
 
 import app.model.Adopter;
-import app.service.UserService;
+import app.service.AdopterService;
 import app.single_point_access.GUIFrameSinglePointAccess;
 import app.single_point_access.ServiceSinglePointAccess;
 import app.view.UserDetailsView;
@@ -13,7 +13,7 @@ public class UserDetailsController {
 
     private UserDetailsView userDetailsView;
 
-    private UserService userService = ServiceSinglePointAccess.getUserService();
+    private AdopterService adopterService = ServiceSinglePointAccess.getAdopterService();
 
 
     public void startLogic(Adopter adopter) {

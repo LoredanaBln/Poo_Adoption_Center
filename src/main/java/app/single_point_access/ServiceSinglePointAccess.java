@@ -1,18 +1,18 @@
 package app.single_point_access;
 
-import app.service.UserService;
-import app.service.implementation.UserServiceImpl;
+import app.service.AdopterService;
+import app.service.implementation.AdopterServiceImpl;
 import app.service.performance.AppPerformanceService;
 import app.service.performance.SQLProcedurePerformanceService;
 
 public class ServiceSinglePointAccess {
 
-    private static UserService userService;
+    private static AdopterService adopterService;
     private static AppPerformanceService appPerformanceService;
     private static SQLProcedurePerformanceService SQLProcedurePerformanceService;
 
     static {
-        userService = new UserServiceImpl();
+        adopterService = new AdopterServiceImpl();
         appPerformanceService = new AppPerformanceService();
         SQLProcedurePerformanceService = new SQLProcedurePerformanceService();
     }
@@ -25,8 +25,8 @@ public class ServiceSinglePointAccess {
         return SQLProcedurePerformanceService;
     }
 
-    public static UserService getUserService() {
-        return userService;
+    public static AdopterService getAdopterService() {
+        return adopterService;
     }
 
 }

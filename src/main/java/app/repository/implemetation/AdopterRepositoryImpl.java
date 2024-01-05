@@ -57,9 +57,10 @@ public class AdopterRepositoryImpl implements AdopterRepository {
         Transaction transaction = session.beginTransaction();
 
         // Native SQL - not preferred
-//         Query query = session.createSQLQuery("select * from user");
+        Query query = session.createSQLQuery("select * from user");
 
-        TypedQuery<Adopter> query = session.getNamedQuery("findAllUsers");
+        //TypedQuery<Adopter> query = session.getNamedQuery("findAllUsers");
+
         List<Adopter> adopters = query.getResultList();
 
         transaction.commit();

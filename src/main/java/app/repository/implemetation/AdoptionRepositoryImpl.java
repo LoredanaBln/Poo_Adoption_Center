@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.util.Date;
 import java.util.List;
 
 public class AdoptionRepositoryImpl implements AdoptionRepository {
@@ -112,4 +113,7 @@ public class AdoptionRepositoryImpl implements AdoptionRepository {
 
         return findById(entity.getId()) == null;
     }
+
+
+
 }

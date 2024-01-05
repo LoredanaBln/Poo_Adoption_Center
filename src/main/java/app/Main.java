@@ -4,8 +4,10 @@ import app.controller.gui.LoginController;
 import app.model.Address;
 import app.model.Adopter;
 import app.model.Animal;
+import app.model.Staff;
 import app.repository.AnimalRepository;
-import app.service.UserService;
+import app.repository.StaffRepository;
+import app.service.AdopterService;
 import app.single_point_access.RepositorySinglePointAccess;
 import app.single_point_access.ServiceSinglePointAccess;
 import org.springframework.boot.SpringApplication;
@@ -51,12 +53,12 @@ public class Main {
         addressAdopter.setNumber(12);
         adopter.setAddress(addressAdopter);
 
-        UserService userService = ServiceSinglePointAccess.getUserService();
-        Adopter savedAdopter = userService.save(adopter);
-//        savedAdopter.setName("Loredana_new");
-//        userService.update(savedAdopter);
-        userService.delete(savedAdopter);
-        Adopter foundAdopter = userService.findById(savedAdopter.getId());
+        AdopterService adopterService = ServiceSinglePointAccess.getAdopterService();
+        Adopter savedAdopter = adopterService.save(adopter);
+        savedAdopter.setName("Loredana_new");
+        adopterService.update(savedAdopter);
+        //adopterService.delete(savedAdopter);
+        Adopter foundAdopter = adopterService.findById(savedAdopter.getId());
         if (foundAdopter != null) {
             System.out.println("Found Adopter: " + foundAdopter);
         } else {
@@ -72,9 +74,14 @@ public class Main {
 
 
         AnimalRepository animalRepository = RepositorySinglePointAccess.getAnimalRepository();
-        Animal savedMovie = animalRepository.save(animal);
+        Animal savedAnimal = animalRepository.save(animal);
 
-        userService.createAdoption(savedAdopter, savedMovie, new Date());
-        System.out.println(userService.findById(savedAdopter.getId()));
+        StaffRepository staffRepository = RepositorySinglePointAccess.getStaffRepository();
+        Staff staff = new Staff();
+        staff.setName("John");
+        Staff savedStaff = staffRepository.save(staff);
+
+        adopterService.createAdoption(savedStaff, savedAdopter, savedAnimal, new Date());
+        System.out.println(adopterService.findById(savedAdopter.getId()));
     }
 }

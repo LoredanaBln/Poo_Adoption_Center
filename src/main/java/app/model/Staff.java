@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -19,4 +21,11 @@ public class Staff implements Serializable {
 
     @Column
     private String phone;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
+
+    @OneToMany(mappedBy = "staff", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    private List<Adoption> adoptions = new ArrayList<>();
+
 }

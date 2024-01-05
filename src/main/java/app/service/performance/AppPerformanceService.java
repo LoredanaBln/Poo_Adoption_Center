@@ -4,7 +4,7 @@ import app.model.Adoption;
 import app.model.Animal;
 import app.model.Adopter;
 import app.repository.AnimalRepository;
-import app.service.UserService;
+import app.service.AdopterService;
 import app.single_point_access.RepositorySinglePointAccess;
 import app.single_point_access.ServiceSinglePointAccess;
 
@@ -12,13 +12,13 @@ import java.util.List;
 
 public class AppPerformanceService implements PerformanceService {
 
-    private UserService userService = ServiceSinglePointAccess.getUserService();
+    private AdopterService adopterService = ServiceSinglePointAccess.getAdopterService();
 
     private AnimalRepository animalRepository = RepositorySinglePointAccess.getAnimalRepository();
 
     @Override
     public void applyLogicOnUsers() {
-        List<Adopter> adopters = userService.findAll();
+        List<Adopter> adopters = adopterService.findAll();
         for (Adopter adopter : adopters) {
             if (adopter.getName().length() < 5) {
 
@@ -39,7 +39,7 @@ public class AppPerformanceService implements PerformanceService {
                     }
                 }
 
-                userService.update(adopter);
+                adopterService.update(adopter);
 
             }
         }

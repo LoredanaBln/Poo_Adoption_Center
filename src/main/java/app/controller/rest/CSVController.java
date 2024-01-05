@@ -1,7 +1,7 @@
 package app.controller.rest;
 
 import app.model.Adopter;
-import app.service.UserService;
+import app.service.AdopterService;
 import app.single_point_access.ServiceSinglePointAccess;
 import app.util.FileUtil;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ import java.util.List;
 @RequestMapping("/csv")
 public class CSVController {
 
-    private UserService userService = ServiceSinglePointAccess.getUserService();
+    private AdopterService adopterService = ServiceSinglePointAccess.getAdopterService();
 
     // TO DO
     // For project take in consideration that a csv file could have different order of columns
@@ -69,7 +69,7 @@ public class CSVController {
             }
 
             for (Adopter adopterIterator : adopters) {
-                userService.save(adopterIterator);
+                adopterService.save(adopterIterator);
             }
 
             return ResponseEntity.status(HttpStatus.OK).body(true);
@@ -100,7 +100,7 @@ public class CSVController {
             fileWriter.write(header);
 
 
-            List<Adopter> adopters = userService.findAll();
+            List<Adopter> adopters = adopterService.findAll();
             for (Adopter adopterIterator : adopters) {
                 String userDetails = "" + adopterIterator.getName() + "," + adopterIterator.getPassword() + "\n";
                 fileWriter.write(userDetails);

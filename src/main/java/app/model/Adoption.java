@@ -18,10 +18,16 @@ public class Adoption {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @ToString.Exclude
     @JsonIgnore
     private Adopter adopter;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ToString.Exclude
+    @JsonIgnore
+    private Staff staff;
+
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Animal animal;
