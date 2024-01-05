@@ -2,7 +2,7 @@ package app.controller.rest;
 
 import app.dto.UserDTO;
 import app.model.Adopter;
-import app.service.UserService;
+import app.service.AdopterService;
 import app.single_point_access.ServiceSinglePointAccess;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    private UserService userService = ServiceSinglePointAccess.getUserService();
+    private AdopterService adopterService = ServiceSinglePointAccess.getAdopterService();
 
     // Map http://localhost:8080/user/all
     // Get - to take data from server
@@ -33,7 +33,7 @@ public class UserController {
     public ResponseEntity<List<Adopter>> getAllUsers() {
 
         // Return a Response which has a status and a body (data)
-        return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(adopterService.findAll());
     }
 
     // {id} - is a value sent by url and is named path variable
@@ -41,7 +41,7 @@ public class UserController {
     // Attention - GET doesn't have a body
     @GetMapping("/id/{id}")
     public ResponseEntity<Adopter> getUserById(@PathVariable Integer id) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(adopterService.findById(id));
     }
 
     // Post - create data
@@ -49,40 +49,40 @@ public class UserController {
     // For POST, PUT, DELETE we can send information both : Path Variable & RequestBody
     @PostMapping("/create")
     public ResponseEntity<Adopter> createUser(@RequestBody Adopter adopter) {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.save(adopter));
+        return ResponseEntity.status(HttpStatus.OK).body(adopterService.save(adopter));
     }
 
     // Put - update data
     // Put with path variable
     @PutMapping("/updateName/{id}/{name}")
     public ResponseEntity<Adopter> updateUserName(@PathVariable Integer id, @PathVariable String name) {
-        Adopter adopter = userService.findById(id);
+        Adopter adopter = adopterService.findById(id);
         adopter.setName(name);
-        Adopter adopterUpdated = userService.update(adopter);
+        Adopter adopterUpdated = adopterService.update(adopter);
         return ResponseEntity.status(HttpStatus.OK).body(adopterUpdated);
     }
 
     @PutMapping("/update")
     public ResponseEntity<Adopter> update(@RequestBody Adopter adopter) {
-        Adopter adopterFromDB = userService.findById(adopter.getId());
+        Adopter adopterFromDB = adopterService.findById(adopter.getId());
         adopterFromDB.setName(adopter.getName());
         adopterFromDB.setPassword(adopter.getPassword());
-        Adopter adopterUpdated = userService.update(adopterFromDB);
+        Adopter adopterUpdated = adopterService.update(adopterFromDB);
         return ResponseEntity.status(HttpStatus.OK).body(adopterUpdated);
     }
 
     // Delete
     @DeleteMapping("/delete")
     public ResponseEntity<Boolean> deleteById(@RequestBody Integer id) {
-        Adopter adopter = userService.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(userService.delete(adopter));
+        Adopter adopter = adopterService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(adopterService.delete(adopter));
     }
 
     @Operation(summary = "Get details (name, address, phone) from all users")
     @GetMapping("/details_all")
     public ResponseEntity<List<UserDTO>> getAllUserDetails() {
 
-        List<Adopter> adopters = userService.findAll();
+        List<Adopter> adopters = adopterService.findAll();
         List<UserDTO> userDTOS = new ArrayList<>();
 
         for (Adopter adopter : adopters) {
