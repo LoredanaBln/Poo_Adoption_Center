@@ -4,9 +4,9 @@ import app.model.Address;
 import lombok.Data;
 
 @Data
-public class UserDTO {
-
+public class StaffDTO {
     private String name;
     private Address address;
     private String phone;
+
 }

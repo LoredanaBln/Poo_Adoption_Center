@@ -23,7 +23,6 @@ import java.util.List;
         {@NamedQuery(name = "findUserByName", query = "from Adopter pers where pers.name = :name"),
                 @NamedQuery(name = "findUserByNameAndPassword", query = "from Adopter pers where pers.name = :name and pers.password=:password"),
                 @NamedQuery(name = "findUserById", query = "from Adopter pers where pers.id = :id"),
-                //@NamedQuery(name = "findAllUsers", query = "from Adopter")
                 @NamedQuery(name = "findAllUsers", query = "from Adopter")
         }
 )
@@ -42,7 +41,7 @@ public class Adopter implements Serializable {
     @Column
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Address address;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

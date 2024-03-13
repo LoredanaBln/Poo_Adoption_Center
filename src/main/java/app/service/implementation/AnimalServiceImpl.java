@@ -41,22 +41,21 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     public List<Animal> findAllAvailableAnimals() {
-        SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        try (Session session = HibernateConfiguration.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
 
-        try {
-            TypedQuery<Animal> query = session.createQuery("from Animal animal where availability =: true", Animal.class);
-            List<Animal> animals = query.getResultList();
-            transaction.commit();
-            return animals;
-        } catch (Exception e) {
-            if (transaction != null && transaction.isActive()) {
-                transaction.rollback();
+            try {
+                TypedQuery<Animal> query = session.createQuery("FROM Animal WHERE availability = true", Animal.class);
+                List<Animal> animals = query.getResultList();
+                transaction.commit();
+                return animals;
+            } catch (Exception e) {
+                if (transaction != null && transaction.isActive()) {
+                    transaction.rollback();
+                }
+                throw new RuntimeException("Error finding all available Animals", e);
             }
-            throw new RuntimeException("Error finding all Animals", e);
-        } finally {
-            session.close();
         }
     }
+
 }

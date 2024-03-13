@@ -19,7 +19,7 @@ public class PerformanceController {
     @GetMapping("/java_logic")
     public ResponseEntity<Long> applyJavaLogic() {
         long timeStart = System.nanoTime();
-        appPerformanceService.applyLogicOnUsers();
+        appPerformanceService.applyLogicOnAdopters();
         long timeEnd = System.nanoTime();
 
         return ResponseEntity.status(HttpStatus.OK).body(timeEnd - timeStart);
@@ -28,9 +28,10 @@ public class PerformanceController {
     @GetMapping("/sql_logic")
     public ResponseEntity<Long> applySQLLogic() {
         long timeStart = System.nanoTime();
-        sqlProcedurePerformanceService.applyLogicOnUsers();
+        sqlProcedurePerformanceService.applyLogicOnAdopters();
         long timeEnd = System.nanoTime();
 
         return ResponseEntity.status(HttpStatus.OK).body(timeEnd - timeStart);
     }
+
 }

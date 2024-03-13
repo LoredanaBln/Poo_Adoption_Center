@@ -8,79 +8,273 @@
 	},
 	"item": [
 		{
-			"name": "http://localhost:8080/user/all",
+			"name": "return all adopters",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/user/all"
+				"url": "http://localhost:8080/adopter/all"
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/user/id/1",
+			"name": "return adopter by id",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/user/id/1"
+				"url": "http://localhost:8080/adopter/id/146"
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/user/create",
+			"name": "create adopter",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"John\",\r\n    \"phone\": \"07856783920\",\r\n    \"password\": \"1234\",\r\n    \"salary\": 22,\r\n    \"address\": {\r\n        \"id\": 1,\r\n        \"street\": \"Dorobantilor\",\r\n        \"number\": 34,\r\n        \"city\": \"Cluj-Napoca\"\r\n    }\r\n}",
+					"raw": "{\r\n    \"name\": \"John\",\r\n    \"phone\": \"07856783920\",\r\n    \"password\": \"1234\",\r\n   \"address\": {\r\n        \"id\": 1,\r\n        \"street\": \"Dorobantilor\",\r\n        \"number\": 34,\r\n        \"city\": \"Cluj-Napoca\"\r\n    }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/user/create"
+				"url": "http://localhost:8080/adopter/create"
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/user//updateName/1/New_Name",
+			"name": "update adopter name",
 			"request": {
 				"method": "PUT",
 				"header": [],
-				"url": "http://localhost:8080/user//updateName/1/New_Name"
+				"url": "http://localhost:8080/adopter//updateName/1/New_Name"
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/user/update",
+			"name": "update adopter",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"New_Name\",\r\n    \"phone\": \"078564673\",\r\n    \"password\": \"1234\",\r\n    \"salary\": 4434\r\n}",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"New_Name\",\r\n    \"phone\": \"078564673\",\r\n    \"password\": \"1234\"}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/user/update"
+				"url": "http://localhost:8080/adopter/update"
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/user/details_all",
+			"name": "get details about adopter",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/user/details_all"
+				"url": "http://localhost:8080/adopter/details_all"
+			},
+			"response": []
+		},
+			{
+				"name": "delete adopter",
+				"request": {
+					"method": "DELETE",
+					"header": [],
+					"body": {
+						"mode": "raw",
+						"raw": "1",
+						"options": {
+							"raw": {
+								"language": "json"
+							}
+						}
+					},
+					"url": "http://localhost:8080/adopter/delete/id/1"
+				},
+				"response": []
+			},
+		{
+			"name": "import_adopter",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "adopters_import.csv",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/csv/import_adopter"
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/user/delete",
+			"name": "export_adopter",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "adopters_export.csv",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/csv/export_adopter"
+			},
+			"response": []
+		},
+		{
+			"name": "import_animals",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "animals_import.csv",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/csv/import_animals"
+			},
+			"response": []
+		},
+		{
+			"name": "export_animals",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "animals_export.csv",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/csv/export_animals"
+			},
+			"response": []
+		},
+		{
+			"name": "java_logic",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/performance/java_logic"
+			},
+			"response": []
+		},
+		{
+			"name": "sql_logic",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/performance/sql_logic"
+			},
+			"response": []
+		},
+		{
+			"name": "java_logic_staff",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/performanceStaff/java_logic_staff"
+			},
+			"response": []
+		},
+		{
+			"name": "sql_logic_staff",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/performanceStaff/sql_logic_staff"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Adoption",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"staff\": {\r\n        \"id\": 100,\r\n        \"name\": \"John Doe\"\r\n    },\r\n    \"adopter\": {\r\n        \"id\": 2,\r\n        \"name\": \"Alice Smith\",\r\n        \"phone\": \"07856783920\",\r\n        \"password\": \"1234\",\r\n        \"address\": {\r\n            \"id\": 3,\r\n            \"street\": \"Dorobantilor\",\r\n            \"number\": 34,\r\n            \"city\": \"Cluj-Napoca\"\r\n        }\r\n    },\r\n    \"animal\": {\r\n        \"id\": 4,\r\n        \"name\": \"Buddy\",\r\n        \"species\": \"Dog\"\r\n    },\r\n    \"date\": \"2024-01-10T12:30:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/adopter/createAdoptions"
+			},
+			"response": []
+		},
+		{
+			"name": "return all Staff members",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/staff/allStaff"
+			},
+			"response": []
+		},
+		{
+			"name": "get staff by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/staff/idStaff/1"
+			},
+			"response": []
+		},
+		{
+			"name": "create Staff",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 100,\r\n    \"name\": \"John Doe\",\r\n    \"phone\": \"1234567890\"\r\n}",					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/staff/createStaff"
+			},
+			"response": []
+		}
+		,
+		{
+			"name": "update Staff Name",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": "http://localhost:8080/staff//updateStaffName/1/New_Name"
+			},
+			"response": []
+		},
+		{
+			"name": "delete Staff",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -93,63 +287,111 @@
 						}
 					}
 				},
-				"url": "http://localhost:8080/user/delete"
+				"url": "http://localhost:8080/staff/deleteStaff/id/1"
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/csv/import_user",
+			"name": "details_staff_all",
 			"request": {
-				"method": "POST",
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/staff/details_staff_all"
+			},
+			"response": []
+		},
+		{
+			"name": "return all Adoptions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/adoption/allAdoptions"
+			},
+			"response": []
+		},
+		{
+			"name": "return Adoption by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/adoption/idAdoption/1"
+			},
+			"response": []
+		},
+		{
+			"name": "delete Adoption",
+			"request": {
+				"method": "DELETE",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "users_import.csv",
+					"raw": "1",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/csv/import_user"
+				"url": "http://localhost:8080/adoption/deleteAdoption/id/1"
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/csv/export_user",
+			"name": "details_all_adoption",
 			"request": {
-				"method": "POST",
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/adoption/details_all_adoption"
+			},
+			"response": []
+		},
+
+
+		{
+			"name": "return all Animals",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/animal/allAnimals"
+			},
+			"response": []
+		},
+		{
+			"name": "get animal by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/animal/idAnimal/1"
+			},
+			"response": []
+		},
+		{
+			"name": "delete Animal",
+			"request": {
+				"method": "DELETE",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "users_export.csv",
+					"raw": "1",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:8080/csv/export_user"
+				"url": "http://localhost:8080/animal/deleteAnimal/id/1"
 			},
 			"response": []
 		},
 		{
-			"name": "http://localhost:8080/performance/java_logic",
+			"name": "details_all_animal",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:8080/performance/java_logic"
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:8080/performance/sql_logic",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": "http://localhost:8080/performance/sql_logic"
+				"url": "http://localhost:8080/animal/details_all_animal"
 			},
 			"response": []
 		}
+
 	]
 }

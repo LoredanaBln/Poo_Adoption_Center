@@ -46,7 +46,7 @@ public class AdoptionServiceImpl implements AdoptionService {
     }
 
     @Override
-    public List<Adoption> getAdoptionsByDateRange(Date startDate, Date endDate) {
+        public List<Adoption> getAdoptionsByDateRange(Date startDate, Date endDate) {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
