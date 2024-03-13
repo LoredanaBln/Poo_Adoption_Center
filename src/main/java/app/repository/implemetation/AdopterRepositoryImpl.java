@@ -1,7 +1,9 @@
 package app.repository.implemetation;
 
 import app.configuration.HibernateConfiguration;
+import app.model.Address;
 import app.model.Adopter;
+import app.repository.AddressRepository;
 import app.repository.AdopterRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,18 +15,30 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class AdopterRepositoryImpl implements AdopterRepository {
+    private AddressRepository addressRepository = new AddressRepositoryImpl();
     @Override
     public Adopter save(Adopter entity) {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        Integer idOnPersonSaved = (Integer) session.save(entity);
+        try{
+            Address address = entity.getAddress();
+            if(address != null && addressRepository.findById(address.getId()) == null){
+                addressRepository.save(address);
+                transaction.commit();
+            }
+            session.saveOrUpdate(entity);
+        }
+        catch (Exception e){
+            transaction.rollback();
+            throw e;
+        }
+        finally {
+            session.close();
+        }
 
-        transaction.commit();
-        session.close();
-
-        return findById(idOnPersonSaved);
+        return entity;
     }
 
     @Override
@@ -56,10 +70,10 @@ public class AdopterRepositoryImpl implements AdopterRepository {
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
-        // Native SQL - not preferred
-        Query query = session.createSQLQuery("select * from user");
+        // Native SQL - select specific columns
+        Query query = session.createSQLQuery("select id, name, phone, password, address_id from adopter")
+                .addEntity(Adopter.class);
 
-        //TypedQuery<Adopter> query = session.getNamedQuery("findAllUsers");
 
         List<Adopter> adopters = query.getResultList();
 
@@ -69,6 +83,7 @@ public class AdopterRepositoryImpl implements AdopterRepository {
         return adopters;
     }
 
+
     @Override
     public Adopter findById(Integer id) {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
@@ -76,11 +91,11 @@ public class AdopterRepositoryImpl implements AdopterRepository {
         Transaction transaction = session.beginTransaction();
 
         // HQL - Hibernate Query Language, but use named query instead to reuse them
-        Query query = session.createQuery("from Adopter where id=:id");
-        query.setParameter("id", id);
-
-//        TypedQuery<Adopter> query = session.getNamedQuery("findPersonById");
+//        Query query = session.createQuery("from Adopter adopter where adopter.id=:id");
 //        query.setParameter("id", id);
+
+        TypedQuery<Adopter> query = session.getNamedQuery("findUserById");
+        query.setParameter("id", id);
 
         Adopter adopter;
         try {

@@ -14,10 +14,19 @@ import java.sql.SQLException;
 public class SQLProcedurePerformanceService implements PerformanceService {
     @Override
     @Transactional
-    public void applyLogicOnUsers() {
+    public void applyLogicOnAdopters() {
         SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
         Session session = sessionFactory.openSession();
-        StoredProcedureQuery query = session.createStoredProcedureQuery("logic_cinema");
+        StoredProcedureQuery query = session.createStoredProcedureQuery("logic_adoption_center");
+        query.execute();
+    }
+
+    @Override
+    @Transactional
+    public void applyLogicOnStaff() {
+        SessionFactory sessionFactory = HibernateConfiguration.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        StoredProcedureQuery query = session.createStoredProcedureQuery("logic_adoption_center_staff");
         query.execute();
     }
 }

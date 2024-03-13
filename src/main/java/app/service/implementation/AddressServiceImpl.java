@@ -53,10 +53,7 @@ public class AddressServiceImpl implements AddressService {
             Transaction transaction = session.beginTransaction();
 
             try {
-                TypedQuery<Adoption> query = session.createQuery(
-                        "FROM Adoption a WHERE a.adopter.address.id = :addressId",
-                        Adoption.class
-                );
+                TypedQuery<Adoption> query = session.createQuery("FROM Adoption a WHERE a.adopter.address.id = :addressId", Adoption.class);
                 query.setParameter("addressId", addressID);
 
                 List<Adoption> adoptionsFromAddress = query.getResultList();
